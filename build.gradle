@@ -1,0 +1,101 @@
+defaultTasks 'clean', 'build', 'artifactoryPublish'
+
+group = 'com.blinkbox.books'
+
+version = '1.6.54'
+
+
+task wrapper(type: org.gradle.api.tasks.wrapper.Wrapper) {
+    gradleVersion = '2.2.1'
+}
+
+apply plugin: 'java-robolectric'
+apply plugin: 'java'
+apply plugin: 'maven'
+
+sourceCompatibility = 1.6
+targetCompatibility = 1.6
+
+buildscript {
+    repositories {
+        mavenCentral()
+
+		maven {
+			url 'http://repo.jfrog.org/artifactory/gradle-plugins-snapshots'
+		}
+    }
+
+    dependencies {
+        // use version 2.0 for Robolectric 2.0
+        classpath group: 'com.stanfy.android', name: 'gradle-plugin-java-robolectric', version: '2.0'
+        classpath 'org.jfrog.buildinfo:build-info-extractor-gradle:3.0.x-SNAPSHOT'
+        classpath "com.android.tools.build:gradle:1.0.0"
+    }
+}
+
+javarob {
+    packageName = 'com.blinkbox.books'
+}
+
+repositories {
+    mavenCentral()
+}
+
+allprojects {
+	apply plugin: 'com.jfrog.artifactory-upload'
+}
+
+artifactory {
+	contextUrl = "${artifactory_contextUrl}"   //The base Artifactory URL if not overridden by the publisher/resolver
+	
+	publish {
+		repository {
+			repoKey = 'mobile-releases'
+			username = "${artifactory_user}"
+			password = "${artifactory_password}"
+			maven = true
+			 
+		}
+	}
+	
+	resolve {
+		repository {
+			repoKey = 'mobile-releases'
+			username = "${artifactory_user}"
+			password = "${artifactory_password}"
+			maven = true
+			 
+		}
+	}
+}
+
+configurations {
+    deployerJars
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+
+dependencies {
+    compile "com.google.android:android:4.1.1.4"
+    compile "com.google.code.gson:gson:2.2.4"
+    compile "com.blinkbox.books:volley:1.1.20"
+    compile files('libs/braintree-android-encryption-1.0.0.jar')
+    testCompile "junit:junit:4.11"
+    testCompile group: 'org.robolectric', name: 'robolectric', version: '2.2'
+    deployerJars "org.apache.maven.wagon:wagon-http:2.4"
+}
+
+
+
+artifacts {
+    archives javadocJar
+}
+
+task copyToLib(type: Copy) {
+    from configurations.compile
+    into "libs"
+}

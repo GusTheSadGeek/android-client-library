@@ -1,0 +1,22 @@
+# Java class files
+*.class
+
+# generated files
+bin/
+gen/
+
+# Gradle build files
+build/
+.gradle/
+local.properties
+
+# Android studio files
+.idea/
+*.iml
+atlassian-ide-plugin.xml
+
+#OS Files
+.DS_Store
+
+#Vagrant files
+.vagrant/

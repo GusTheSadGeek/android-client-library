@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="src" path="src/main/java"/>
+	<classpathentry kind="src" path="src/test/java"/>
+	<classpathentry kind="lib" path="libs/android.jar" sourcepath="/Users/ericyuan/Documents/Android/sdk/sources/android-14"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
+	<classpathentry kind="lib" path="libs/gson-2.2.3.jar"/>
+	<classpathentry kind="lib" path="libs/braintree-android-encryption-1.0.0.jar"/>
+	<classpathentry kind="lib" path="libs/robolectric-2.3-20131220.193934-79-jar-with-dependencies.jar"/>
+	<classpathentry kind="lib" path="libs/volley-1.1.18.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
